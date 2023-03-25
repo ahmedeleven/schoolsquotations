@@ -1,0 +1,116 @@
+{% extends "quotations/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="fixed-buttons">
+
+	{% if user.is_superuser %}		
+
+			<a href="{% url 'usersEdit' theuser.id %}" class="btn-circle btn-edit" title="Edit" data-toggle="tooltip" data-original-title="Edit"><span class="glyphicon glyphicon-edit icons-style-inverse"></span></a>
+	{% endif %}
+
+</div>
+
+<div class="panel panel-primary panel-custom-primary">
+	<div class="panel-heading">
+		{{theuser.username}}
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>First Name</th>
+					<td>{{theuser.first_name}}</td>
+				</tr>
+				<tr>
+					<th>Last Name</th>
+					<td>{{theuser.last_name}}</td>
+				</tr>
+				<tr>
+					<th>Username</th>
+					<td>{{theuser.username}}</td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{{theuser.email}}</td>
+				</tr>
+				<tr>
+					<th>Last Login</th>
+					<td>{{theuser.last_login}}</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+{% if permissions %}
+<div class="panel panel-default manage_container panel-custom-primary">
+
+	<div class="panel-heading">
+		<h4>Permissions</h4>
+	</div>
+
+	<div class="panel-body">
+		<table class="table-responsive table_custom_manage">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Code Name</th>
+				</tr>
+			</thead>
+			<tbody>
+
+					    {% for permission in permissions %}
+					    <tr>
+					        <td>{{permission.name}}</td>
+					        <td>{{permission.codename}}</td>
+					    </tr>
+					    {% endfor %}
+			</tbody>
+		</table>
+		
+	</div>
+
+</div>
+{% endif %}
+
+
+
+
+{% if groups %}
+<div class="panel panel-default manage_container panel-custom-primary">
+
+	<div class="panel-heading">
+		<h4>Groups</h4>
+	</div>
+
+	<div class="panel-body">
+		<table class="table-responsive table_custom_manage">
+			<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+
+					    {% for group in groups %}
+					    <tr>
+					        <td>{{group.name}}</td>
+					    </tr>
+					    {% endfor %}
+			</tbody>
+		</table>
+		
+	</div>
+
+</div>
+{% endif %}
+
+
+
+{% endblock %}
+

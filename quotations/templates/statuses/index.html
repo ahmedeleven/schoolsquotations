@@ -1,0 +1,98 @@
+{% extends "quotations/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="fixed-buttons">
+	{% if perms.quotations.add_status %}
+
+		<a href="{% url 'statusesAdd' %}" class="btn-circle btn-add" title="" data-toggle="tooltip" data-original-title="Add Status">
+			<!--<img src="{% static 'quotations/img/add-button.png' %}" alt="">-->
+			<span class="glyphicon glyphicon-plus icons-style-inverse"></span>
+		</a>
+	{% endif %}
+
+</div>
+
+
+<div class="panel panel-default manage_container panel-custom-primary">
+
+	<div class="panel-heading">
+		<h4>Statuses</h4>
+	</div>
+
+	<div class="panel-body">
+		<table class="table-responsive table_custom_manage">
+			<!--<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>-->
+			<tbody>
+					{% if statuses %}
+					    {% for status in statuses %}
+					    <tr>
+					        <td><span class="coloured-circle" style="background-color: {{status.color}}"></span>{{status.name}}</td>
+					        {% if perms.quotations.change_status %}
+					        	<td><a href="{% url 'statusesEdit' status.id %}" class="manage_icons edit_icon" title="" data-toggle="tooltip" data-original-title="Edit"><span class="glyphicon glyphicon-edit icons-style"></span></a></td>
+					        {% endif %}
+					        {% if perms.quotations.delete_status %}
+					        	<td><a href="{% url 'statusesDelete' status.id %}" class="manage_icons delete_icon" title="" data-toggle="tooltip" data-original-title="Delete"><span class="glyphicon glyphicon-trash icons-style"></span></a></td>
+					        {% endif %}
+					    </tr>
+					    {% endfor %}
+					{% else %}
+					    <p>No statuses are available.</p>
+					{% endif %}
+					
+				
+			</tbody>
+		</table>
+		{% if statuses.has_other_pages %}
+			<ul class="pagination">
+			    {% if statuses.has_previous %}
+			     	<li><a href="?page={{ statuses.previous_page_number }}">&laquo;</a></li>
+			    {% else %}
+			     	<li class="disabled"><span>&laquo;</span></li>
+			    {% endif %}
+			    {% for i in statuses.paginator.page_range %}
+			    	{% if statuses.number == i %}
+			    		<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+			    	{% else %}
+			    		<li><a href="?page={{ i }}">{{ i }}</a></li>
+			    	{% endif %}
+			    {% endfor %}
+			    {% if statuses.has_next %}
+			    	<li><a href="?page={{ statuses.next_page_number }}">&raquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&raquo;</span></li>
+			    {% endif %}
+			</ul>
+		{% endif %}
+
+
+		
+	</div>
+
+</div>
+
+
+
+<script type='text/javascript'>
+	function confirm_delete(message) {
+			$(document).ready(function() {
+				$('.delete_icon').click(function() {
+					if(confirm(message)) {
+
+					} else {
+						return false;
+					}
+				});	
+			});
+	}
+	confirm_delete('Are you sure you want to delete this status ?');
+</script>
+
+
+{% endblock %}
+

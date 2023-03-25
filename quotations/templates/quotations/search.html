@@ -1,0 +1,112 @@
+{% load static %}
+
+
+	<div class="fixed-buttons">
+		{% if perms.quotations.add_quotation %}
+
+			<a href="{% url 'quotationsAdd' %}" class="btn-circle btn-add" title="" data-toggle="tooltip" data-original-title="Add Quotation">
+				<!--<img src="{% static 'quotations/img/add-button.png' %}" alt="">-->
+				<span class="glyphicon glyphicon-plus icons-style-inverse"></span>
+			</a>
+		{% endif %}
+
+		{% if quotations_ids_string %}
+			<a href="{% url 'quotationsExport' quotations_ids_string %}" class="btn-circle btn-export" title="" data-toggle="tooltip" data-original-title="Export">
+					<!--<img src="{% static 'quotations/img/add-button.png' %}" alt="">-->
+					<span class="glyphicon glyphicon-export icons-style-inverse"></span>
+			</a>
+		{% endif %}
+
+	</div>
+
+
+	<div class="panel-heading">
+		<!--<a href="{% url 'quotationsAdd' %}" class="add_link manage_icons" title="" data-toggle="tooltip" data-original-title="Add Quotation">
+			<span class="glyphicon glyphicon-plus icons-style-inverse"></span>
+		</a>-->
+		<h4>Quotations</h4>
+	</div>
+
+	<div class="panel-body">
+		<table class="table-responsive table_custom_manage">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>School</th>
+					<th>Requester</th>
+					<th>Technician</th>
+					<th>Company</th>
+					<th>Status</th>
+					<th>Received</th>
+					<th>Created</th>
+				</tr>
+			</thead>
+			<tbody>
+					{% if quotations %}
+					    {% for quotation in quotations %}
+					    <tr>
+					    	<td>QS{{quotation.id}}</td>
+					        <td>{{quotation.school}}</td>
+					        <td>
+					        	{% if quotation.requester == 1 %}
+					        		School
+					        	{% elif quotation.requester == 2 %}
+					        		{{quotation.itadmin}}
+					        	{% endif %}
+					        </td>
+					        <td>{{quotation.technician}}</td>
+					        <td>{{quotation.company}}</td>
+					        <td>
+					        	<span class="coloured-circle" style="background-color: {{quotation.status.color}};"></span>
+					        	<span>{{quotation.status}}</span>
+					        </td>
+					        <td>{{quotation.received|date:"M d, Y"}}</td>
+					        <td>{{quotation.created|date:"M d, Y"}}</td>
+					        <td><a href="{% url 'quotationsEdit' quotation.id %}" class="manage_icons details_icon" title="" data-toggle="tooltip" data-html="true" data-original-title="Click for more details <br /> {{quotation.notes|linebreaks}}"><span class="glyphicon glyphicon-list-alt icons-style"></span></a></td>
+					        <td><a href="{% url 'quotationsEdit' quotation.id %}" class="manage_icons edit_icon" title="" data-toggle="tooltip" data-original-title="Edit"><span class="glyphicon glyphicon-edit icons-style"></span></a></td>
+					        <td><a href="{% url 'quotationsDelete' quotation.id %}" class="manage_icons delete_icon" title="" data-toggle="tooltip" data-original-title="Delete"><span class="glyphicon glyphicon-trash icons-style"></span></a></td>
+					    </tr>
+					    {% endfor %}
+					{% else %}
+					    <p>There is no Quotations available</p>
+					{% endif %}
+					
+				
+			</tbody>
+		</table>
+
+
+		{% if quotations.has_other_pages %}
+			<ul class="pagination">
+			    {% if quotations.has_previous %}
+			     	<li><a href="?page={{ quotations.previous_page_number }}">&laquo;</a></li>
+			    {% else %}
+			     	<li class="disabled"><span>&laquo;</span></li>
+			    {% endif %}
+			    {% for i in quotations.paginator.page_range %}
+			    	{% if quotations.number == i %}
+			    		<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+			    	{% else %}
+			    		<li><a href="?page={{ i }}">{{ i }}</a></li>
+			    	{% endif %}
+			    {% endfor %}
+			    {% if quotations.has_next %}
+			    	<li><a href="?page={{ quotations.next_page_number }}">&raquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&raquo;</span></li>
+			    {% endif %}
+			</ul>
+		{% endif %}
+
+
+
+		
+	</div>
+
+	<script type='text/javascript'>
+			$(document).ready(function(){
+			    $("tbody tr:odd").addClass("tr_odd");
+			    $("tbody tr:even").addClass("tr_even");			
+ 
+			});
+	</script>

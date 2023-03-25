@@ -1,0 +1,272 @@
+
+{% extends "quotations/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{{request_post}}
+
+
+<div class="panel panel-primary panel-custom-primary">
+	<div class="panel-heading">Add Quotation</div>
+	<div class="panel-body">
+
+		{% if quotation %}
+			<form action="{% url 'quotationsEdit' quotation.id %}" class="navbar-form navbar-left" role="form" id="EditQuotationForm" method="post" accept-charset="utf-8">
+		{% else %}
+			<form action="{% url 'quotationsAdd' %}" class="navbar-form navbar-left" role="form" id="AddQuotationForm" method="post" accept-charset="utf-8">
+		{% endif %}
+				{% csrf_token %}
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">School</span>
+    						{{ form.school|add_class:"form-control"|attr:"placeholder:School" }}
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+
+
+
+
+
+				<!--<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">School</span>
+    						<input type="text" name="school_name" id="school_name" value="{{ quotation.school.name }}" class="form-control model_select_model" placeholder="School">
+    						<input type="hidden" name="school" id="school" value="{{ quotation.school.id }}" class="model_select_model_hidden" placeholder="School">
+						</div>
+					</div>
+				</div>
+
+				<br />-->
+
+
+
+
+
+
+
+
+				<div class="row" id="requester_row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">Requester</span>
+							{% for radio in form.requester %}
+								<div class="col-md-6 requester-border">
+								{{ radio }}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">Assigned To</span>
+    						<!--<input type="email" name="email" id="email" value="{{ itadmin.email }}" class="form-control" placeholder="Email">-->
+    						{{ form.technician|add_class:"form-control"|attr:"placeholder:Technician" }}
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">Company</span>
+    						<!--<input type="text" name="phone" id="phone" value="{{ itadmin.phone }}" class="form-control" placeholder="Phone">-->
+    						{{ form.company|add_class:"form-control"|attr:"placeholder:Company" }}
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">Status</span>
+    						<!--<input type="text" name="phone" id="phone" value="{{ itadmin.phone }}" class="form-control" placeholder="Phone">-->
+    						{{ form.status|add_class:"form-control"|attr:"placeholder:Status" }}
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">Received</span>
+							{{ form.received|add_class:"form-control"|attr:"placeholder:Received" }}
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"><span class="glyphicon glyphicon-calendar"></span></span>
+
+							
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">Notes</span>
+    						<!--<input type="text" name="phone" id="phone" value="{{ itadmin.phone }}" class="form-control" placeholder="Phone">-->
+    						{{ form.notes|add_class:"form-control"|attr:"placeholder:Notes" }}
+						</div>
+					</div>
+				</div>
+
+				<br />
+
+
+				
+				<div class="submit">
+					<input class="submit_button btn btn-success" type="submit" name="submit" value="Save" />
+				</div>
+			</form>
+
+
+
+			{% if form.errors %}
+				{{form.errors}}
+			{% endif %}
+		
+		
+	</div>
+</div>
+
+
+
+
+<script type='text/javascript'>	
+	$(document).ready(function() {
+		$('input[type=radio][name=requester]').change(function() {
+			//alert($('#id_school').val());
+			$("#itadmin_input").next("br").remove();
+			$("#itadmin_input").prev("br").remove();
+			$("#itadmin_input").remove();
+			if (this.value == 2) {
+				$.ajax({
+			  		type: 'GET',
+				   	url: "{% url 'itadminsList' %}",
+				   	data: 'school_id='+$('#id_school').val(),
+			    	beforeSend: function() {
+			    			
+			    	},
+			    	success: function(data) {
+			    		//alert(data);
+			    		$("#requester_row").after(data);
+			    		$("#itadmin_input").find("select").select2();
+			    	}
+			    });
+			}
+		});
+	});
+</script>
+
+
+
+
+<!--<script type='text/javascript'>
+	$(document).ready(function() {		
+
+		$('.model_select_model').keyup(function(e) {
+
+			if(e.keyCode == 40 || e.keyCode == 38 || e.keyCode == 13) {
+				return false;
+			}
+
+			$.ajax({
+		  		type: 'GET',
+			   	url: "{% url 'schoolsList' %}",
+			   	data: 'quotation_name='+$('.model_select_model').val(),
+		    	beforeSend: function() {
+		    			
+		    	},
+		    	success: function(data) {
+		    		//alert(data);
+		    		$('.model_sub_select_menu').remove();
+		    		$('.model_select_model').after(data);
+		    		$('.model_sub_select_menu_item:first').addClass('model_sub_select_menu_item_selected');
+
+
+		    		$('.model_select_model').off('keypress').keypress(function(e) {
+		    			if(e.keyCode == 40) {
+
+		    				var the_selected = $('.model_sub_select_menu_item_selected');
+		    				if(! the_selected.is(':last-child')) {
+		    					$('.model_sub_select_menu_item_selected').removeClass('model_sub_select_menu_item_selected');
+		    				
+		    					the_selected.next().addClass('model_sub_select_menu_item_selected');
+		    				}
+		    				
+		    				//alert(the_selected.next().html());
+		    			} else if(e.keyCode == 38) {
+		    				var the_selected = $('.model_sub_select_menu_item_selected');
+		    				if(! the_selected.is(':first-child')) {
+		    					$('.model_sub_select_menu_item_selected').removeClass('model_sub_select_menu_item_selected');
+		    					the_selected.prev().addClass('model_sub_select_menu_item_selected');
+		    				}
+		    			} else if(e.keyCode == 13) {
+		    				$('.model_sub_select_menu_item_selected').click();
+		    				e.preventDefault();
+		    				return false;
+		    			}
+		    		});
+
+
+
+
+
+		    		$('.model_sub_select_menu_item').click(function() {
+		    			alert($(this).children('.model_sub_select_id').html());
+		    			$('.model_select_model_hidden').val($(this).children('.model_sub_select_id').html());
+		    			$('.model_select_model').val($(this).children('.model_sub_select_model').html());
+		    			$('.model_sub_select_menu').remove();
+		    		});
+
+				
+
+					$('.model_sub_select_menu_item').hover(function() {
+						$('.model_sub_select_menu_item_selected').removeClass('model_sub_select_menu_item_selected');
+						$(this).addClass('model_sub_select_menu_item_selected');
+					});
+
+					
+
+
+
+		    	},
+				error: function(e){
+					alert(e.status);
+				}
+		  	});
+		});
+
+
+		
+
+
+		$('body').click(function() {
+			$('.model_sub_select_menu').remove();
+		});
+
+	});
+</script>-->
+
+
+{% endblock %}
+

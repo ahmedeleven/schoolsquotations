@@ -1,0 +1,15 @@
+<br />
+<div class="row" id="itadmin_input">
+	<div class="col-md-12">
+		<div class="input-group">
+			<span class="input-group-addon input-group-addon-custom" id="sizing-addon2">It Admin</span>
+			<select name="itadmin" id="id_itadmin" class="form-control">
+				<option>-----</option>
+				{% for itadmin in itadmins %}
+					<option value="{{itadmin}}">{{itadmin.name}}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+</div>
+<br />

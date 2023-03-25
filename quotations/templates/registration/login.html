@@ -1,0 +1,62 @@
+{% extends "quotations/base.html" %}
+{% load static %}
+
+{% block content %}
+
+	{% for msg in messages %}
+		{{msg}}
+	{% endfor %}
+
+	<!-- templates/registration/login.html -->
+	<!--<form method="post">
+	  {% csrf_token %}
+	  {{ form.as_p }}
+	  <button type="submit">Login</button>
+	</form>-->
+
+
+	  <!--<button type="submit">Login</button>-->
+
+
+	<div class="panel panel-primary panel-custom-primary">
+		<div class="panel-heading">Login</div>
+		<div class="panel-body">
+
+				<form class="navbar-form navbar-left" role="form" method="post" accept-charset="utf-8">
+					{% csrf_token %}
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group">
+								<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"></span>
+	    						<input type="text" name="username" autofocus maxlength="254" required id="id_username" class="form-control" placeholder="Username">
+							</div>
+						</div>
+					</div>
+
+					<br />	
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group">
+								<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"></span>
+	    						<input type="password" name="password" id="id_password" class="form-control" placeholder="Password">
+							</div>
+						</div>
+					</div>
+
+					<br />			
+					
+					<div class="submit">
+						<input class="submit_button btn btn-success" type="submit" name="submit" value="Login" />
+					</div>
+				</form>
+
+				{% if form.errors %}
+					{{form.errors}}
+				{% endif %}
+							
+			
+		</div>
+	</div>
+
+{% endblock %}

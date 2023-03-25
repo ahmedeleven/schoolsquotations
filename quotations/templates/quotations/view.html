@@ -1,0 +1,75 @@
+{% extends "quotations/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="fixed-buttons">
+
+	{% if perms.quotations.change_quotation %}
+			<a href="{% url 'quotationsEdit' quotation.id %}" class="btn-circle btn-edit" title="" data-toggle="tooltip" data-original-title="Edit"><span class="glyphicon glyphicon-edit icons-style-inverse"></span></a>
+		
+	{% endif %}
+
+</div>
+
+<div class="panel panel-primary panel-custom-primary">
+	<div class="panel-heading">
+		Quotation #{{quotation.id}}
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>School</th>
+					<td>{{quotation.school}}</td>
+				</tr>
+				<tr>
+					<th>Requester</th>
+					<td>
+					    {% if quotation.requester == 1 %}
+					        School
+					    {% elif quotation.requester == 2 %}
+					        IT Admin
+					    {% endif %}
+					</td>
+				</tr>
+				<tr>
+					<th>Technician</th>
+					<td>{{quotation.technician}}</td>
+				</tr>
+				<tr>
+					<th>Company</th>
+					<td>{{quotation.company}}</td>
+				</tr>
+				<tr>
+					<th>Received</th>
+					<td>{{quotation.received}}</td>
+				</tr>
+				<tr>
+					<th>Created</th>
+					<td>{{quotation.created}}</td>
+				</tr>
+				<tr>
+					<th>Notes</th>
+					<td>{{quotation.notes}}</td>
+				</tr>
+				<tr>
+					<th>Status</th>
+					<td>
+						<span class="coloured-circle" style="background-color: {{quotation.status.color}};"></span>
+					    <span>{{quotation.status}}</span>
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+
+
+{% endblock %}
+

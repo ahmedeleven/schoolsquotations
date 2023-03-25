@@ -1,0 +1,53 @@
+# quotations/urls.py
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('statuses/', views.statusesIndex, name='statusesIndex'),
+    path('statuses/add/', views.statusesAdd, name='statusesAdd'),
+    path('statuses/edit/<int:id>/', views.statusesEdit, name='statusesEdit'),
+    path('statuses/delete/<int:id>/', views.statusesDelete, name='statusesDelete'),
+    path('schools/', views.schoolsIndex, name='schoolsIndex'),
+    path('schools/add/', views.schoolsAdd, name='schoolsAdd'),
+    path('schools/edit/<int:id>/', views.schoolsEdit, name='schoolsEdit'),
+    path('schools/delete/<int:id>/', views.schoolsDelete, name='schoolsDelete'),
+    path('schools/list/', views.schoolsList, name='schoolsList'),
+    path('itadmins/', views.itadminsIndex, name='itadminsIndex'),
+    path('itadmins/add/', views.itadminsAdd, name='itadminsAdd'),
+    path('itadmins/edit/<int:id>/', views.itadminsEdit, name='itadminsEdit'),
+    path('itadmins/delete/<int:id>/', views.itadminsDelete, name='itadminsDelete'),
+    path('itadmins/list/', views.itadminsList, name='itadminsList'),
+    path('companies/', views.companiesIndex, name='companiesIndex'),
+    path('companies/add/', views.companiesAdd, name='companiesAdd'),
+    path('companies/edit/<int:id>/', views.companiesEdit, name='companiesEdit'),
+    path('companies/delete/<int:id>/', views.companiesDelete, name='companiesDelete'),
+    path('technicians/', views.techniciansIndex, name='techniciansIndex'),
+    path('technicians/add/', views.techniciansAdd, name='techniciansAdd'),
+    path('technicians/edit/<int:id>/', views.techniciansEdit, name='techniciansEdit'),
+    path('technicians/delete/<int:id>/', views.techniciansDelete, name='techniciansDelete'),
+    path('', views.quotationsIndex, name='quotationsIndex'),
+    path('quotations/export/<slug:ids>/', views.quotationsExport, name='quotationsExport'),
+    path('quotations/search/', views.quotationsSearch, name='quotationsSearch'),
+    path('quotations/add/', views.quotationsAdd, name='quotationsAdd'),
+    path('quotations/edit/<int:id>/', views.quotationsEdit, name='quotationsEdit'),
+    path('quotations/view/<int:id>/', views.quotationsView, name='quotationsView'),
+    path('quotations/delete/<int:id>/', views.quotationsDelete, name='quotationsDelete'),
+    path('users/', views.usersIndex, name='usersIndex'),
+    path('users/add/', views.usersAdd, name='usersAdd'),
+    path('users/edit/<int:id>/', views.usersEdit, name='usersEdit'),
+    path('users/view/<int:id>/', views.usersView, name='usersView'),
+    path('users/delete/<int:id>/', views.usersDelete, name='usersDelete'),
+    path('groups/add/', views.groupsAdd, name='groupsAdd'),
+    path('groups/edit/<int:id>/', views.groupsEdit, name='groupsEdit'),
+    path('groups/', views.groupsIndex, name='groupsIndex'),
+    path('groups/view/<int:id>/', views.groupsView, name='groupsView'),
+    path('groups/delete/<int:id>/', views.groupsDelete, name='groupsDelete'),
+]
+
+'''path('', views.quotationsIndex, name='quotationsIndex'),
+path('add/', views.quotationsAdd, name='quotationsAdd'),
+path('edit/<int:id>/', views.quotationsEdit, name='quotationsEdit'),
+path('delete/<int:id>/', views.quotationsDelete, name='quotationsDelete'),
+path('search/', views.quotationsSearch, name='quotationsSearch'),
+path('statuses/search/', views.statusesSearch, name='statusesSearch'),'''

@@ -1,0 +1,308 @@
+{% extends "quotations/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+
+<div class="panel panel-primary panel-custom-primary">
+
+	<div class="panel-heading">
+		<h4>Search</h4>
+	</div>
+
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="input-group input search_form">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"></span>
+					<input name="search_id" type="text" class="form-control" placeholder="Id" id="search_id">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group input search_form">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"></span>
+					<input name="search_school_name" type="text" class="form-control" placeholder="School Name" id="search_school_name">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group input search_form">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"></span>
+					<input name="search_company_name" type="text" class="form-control" placeholder="Company Name" id="search_company_name">
+				</div>
+			</div>
+		</div>
+
+			<br />
+		<div class="row">
+			<div class="col-md-6">
+				<div class="input-group input search_form">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"></span>
+					<!--<input name="search_technician_name" type="text" class="form-control" placeholder="Technician Name" id="search_technician_name">-->
+					<select name="search_technician_name" class="form-control" placeholder="Technician" id="search_technician_name">
+						<option value="">Technician</option>
+						{% for technician in technicians_list %}
+							<option value="{{technician}}">{{technician}}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+
+
+			<div class="col-md-6">
+				<div class="input-group input search_form">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"></span>
+					<!--<input name="search_status_name" type="text" class="form-control" placeholder="Status" id="search_status_name">-->
+					<select name="search_status_name" class="form-control" placeholder="Status" id="search_status_name">
+						<option value="">Status</option>
+						{% for status in statuses_list %}
+							<option value="{{status}}">{{status}}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+	
+		</div>
+
+		<br />
+
+		<!--<div class="row">
+			<div class="col-md-4 col-md-offset-1">
+				<div class="input-group input search_form">
+					<input name="search_created_from" type="text" class="form-control" placeholder="Created > From" id="search_created_from">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+
+
+			<div class="col-md-4 col-md-offset-1">
+				<div class="input-group input search_form">
+					<input name="search_created_to" type="text" class="form-control" placeholder="Created > To" id="search_created_to">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+	
+		</div>
+
+		<br />-->
+
+		<div class="row">
+			<div class="col-md-4 col-md-offset-1">
+				<div class="input-group input search_form">
+					<input name="search_received_from" type="text" class="form-control" placeholder="Received > From" id="search_received_from">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+
+
+			<div class="col-md-4 col-md-offset-1">
+				<div class="input-group input search_form">
+					<input name="search_received_to" type="text" class="form-control" placeholder="Received > To" id="search_received_to">
+					<span class="input-group-addon input-group-addon-custom" id="sizing-addon2"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+<div class="panel panel-default manage_container panel-custom-primary">
+
+	<div class="fixed-buttons">
+		{% if perms.quotations.add_quotation %}
+
+			<a href="{% url 'quotationsAdd' %}" class="btn-circle btn-add" title="" data-toggle="tooltip" data-original-title="Add Quotation">
+				<!--<img src="{% static 'quotations/img/add-button.png' %}" alt="">-->
+				<span class="glyphicon glyphicon-plus icons-style-inverse"></span>
+			</a>
+		{% endif %}
+
+
+		{% if quotations_ids_string %}
+			<a href="{% url 'quotationsExport' quotations_ids_string %}" class="btn-circle btn-export" title="" data-toggle="tooltip" data-original-title="Export">
+					<!--<img src="{% static 'quotations/img/add-button.png' %}" alt="">-->
+					<span class="glyphicon glyphicon-export icons-style-inverse"></span>
+			</a>
+		{% endif %}
+
+	</div>
+
+	<div class="panel-heading">
+		<h4>Quotations</h4>
+	</div>
+
+	<div class="panel-body">
+		<table class="table-responsive table_custom_manage">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>School</th>
+					<th>Requester</th>
+					<th>Assigned To</th>
+					<th>Company</th>
+					<th>Status</th>
+					<th>Received</th>
+					<th>Created</th>
+				</tr>
+			</thead>
+			<tbody>
+					{% if quotations %}
+					    {% for quotation in quotations %}
+					    <tr>
+					    	<td>QS{{quotation.id}}</td>
+					        <td>{{quotation.school}}</td>
+					        <td>
+					        	{% if quotation.requester == 1 %}
+					        		School
+					        	{% elif quotation.requester == 2 %}
+					        		{{quotation.itadmin}}
+					        	{% endif %}
+					        </td>
+					        <td>{{quotation.technician}}</td>
+					        <td>{{quotation.company}}</td>
+					        <td>
+					        	<span class="coloured-circle" style="background-color: {{quotation.status.color}};"></span>
+					        	<span>{{quotation.status}}</span>
+					        </td>
+					        <td>{{quotation.received|date:"M d, Y"}}</td>
+					        <td>{{quotation.created|date:"M d, Y"}}</td>
+					        <td><a href="{% url 'quotationsView' quotation.id %}" class="manage_icons details_icon" title="" data-toggle="tooltip" data-html="true" data-original-title="{{quotation.notes|linebreaks}}<br />Click for more details"><span class="glyphicon glyphicon-list-alt icons-style"></span></a></td>
+					        {% if perms.quotations.change_quotation %}
+					        	<td><a href="{% url 'quotationsEdit' quotation.id %}" class="manage_icons edit_icon" title="" data-toggle="tooltip" data-original-title="Edit"><span class="glyphicon glyphicon-edit icons-style"></span></a></td>
+					        {% endif %}
+					        {% if perms.quotations.delete_quotation %}
+					        	<td><a href="{% url 'quotationsDelete' quotation.id %}" class="manage_icons delete_icon" title="" data-toggle="tooltip" data-original-title="Delete"><span class="glyphicon glyphicon-trash icons-style"></span></a></td>
+					        {% endif %}
+					    </tr>
+					    {% endfor %}
+					{% else %}
+					    <p>There is no Quotations available</p>
+					{% endif %}
+					
+				
+			</tbody>
+		</table>
+
+		{% if quotations.has_other_pages %}
+			<ul class="pagination">
+			    {% if quotations.has_previous %}
+			     	<li><a href="?page={{ quotations.previous_page_number }}">&laquo;</a></li>
+			    {% else %}
+			     	<li class="disabled"><span>&laquo;</span></li>
+			    {% endif %}
+			    {% for i in quotations.paginator.page_range %}
+			    	{% if quotations.number == i %}
+			    		<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+			    	{% else %}
+			    		<li><a href="?page={{ i }}">{{ i }}</a></li>
+			    	{% endif %}
+			    {% endfor %}
+			    {% if quotations.has_next %}
+			    	<li><a href="?page={{ quotations.next_page_number }}">&raquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&raquo;</span></li>
+			    {% endif %}
+			</ul>
+		{% endif %}
+
+
+		
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	//var base_directory = "<?php echo $this->webroot; ?>";
+	
+	//alert(query);
+	var  in_action = false;
+	if(in_action == false) {
+		$('.search_form').keyup(function() {
+			in_action = true;
+			search_function();
+			
+		});
+
+		$('.search_form').change(function() {
+			in_action = true;
+			search_function();
+			
+		});
+	}
+
+
+
+
+	function search_function() {
+		var query = {
+			'id' : $('#search_id').val(),
+			'school_name' : $('#search_school_name').val(),
+			'company_name' : $('#search_company_name').val(),
+			'technician_name' : $('#search_technician_name').val(),
+			'status_name' : $('#search_status_name').val(),
+			'received_from' : $('#search_received_from').val(),
+			'received_to' : $('#search_received_to').val(),
+		};
+
+		//alert(JSON.stringify(query));
+		$.ajax({
+		  	type: 'GET',
+			url: "{% url 'quotationsSearch' %}",
+			data: query,
+		    beforeSend: function() {
+		    	//$('.scout_confirm_message').html('');
+		    },
+		    success: function(data) {
+				$('.manage_container').html("");
+				$('.manage_container').html(data);
+				in_action = false;
+				//alert(data);
+				$('[data-toggle="tooltip"]').tooltip();
+		    },
+			error: function(e){
+				alert(e.status);
+			}
+		});
+	}
+	
+</script>
+
+
+<script type='text/javascript'>
+	function confirm_delete(message) {
+			$(document).ready(function() {
+				$('.delete_icon').click(function() {
+					if(confirm(message)) {
+
+					} else {
+						return false;
+					}
+				});	
+			});
+	}
+	confirm_delete('Are you sure you want to delete this quotation ?');
+</script>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,84 @@
+{% extends "quotations/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="fixed-buttons">
+	{% if perms.quotations.add_group %}
+
+		<a href="{% url 'groupsAdd' %}" class="btn-circle btn-add" title="" data-toggle="tooltip" data-original-title="Add Group">
+			<!--<img src="{% static 'quotations/img/add-button.png' %}" alt="">-->
+			<span class="glyphicon glyphicon-plus icons-style-inverse"></span>
+		</a>
+	{% endif %}
+
+</div>
+
+
+<div class="panel panel-default manage_container panel-custom-primary">
+	<div class="panel-heading">
+		<h4>Groups</h4>
+	</div>
+
+
+	<div class="panel-body">
+		<table class="table-responsive table_custom_manage">
+			<thead>
+				<tr>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+					{% if groups %}
+					    {% for group in groups %}
+					    <tr>
+					        <td>{{group.name}}</td>
+					        <td><a href="{% url 'groupsView' group.id %}" class="manage_icons details_icon" title="view" data-toggle="tooltip" data-html="true"><span class="glyphicon glyphicon-list-alt icons-style"></span></a></td>
+					        {% if perms.quotations.change_group %}
+					        	<td><a href="{% url 'groupsEdit' group.id %}" class="manage_icons edit_icon" title="" data-toggle="tooltip" data-original-title="Edit"><span class="glyphicon glyphicon-edit icons-style"></span></a></td>
+					        {% endif %}
+					        {% if perms.quotations.delete_group %}
+					        	<td><a href="{% url 'groupsDelete' group.id %}" class="manage_icons delete_icon" title="" data-toggle="tooltip" data-original-title="Delete"><span class="glyphicon glyphicon-trash icons-style"></span></a></td>
+					        {% endif %}
+					    </tr>
+					    {% endfor %}
+					{% else %}
+					    <p>No groups are available.</p>
+					{% endif %}
+					
+				
+			</tbody>
+		</table>
+		{% if groups.has_other_pages %}
+			<ul class="pagination">
+			    {% if groups.has_previous %}
+			     	<li><a href="?page={{ groups.previous_page_number }}">&laquo;</a></li>
+			    {% else %}
+			     	<li class="disabled"><span>&laquo;</span></li>
+			    {% endif %}
+			    {% for i in groups.paginator.page_range %}
+			    	{% if groups.number == i %}
+			    		<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+			    	{% else %}
+			    		<li><a href="?page={{ i }}">{{ i }}</a></li>
+			    	{% endif %}
+			    {% endfor %}
+			    {% if groups.has_next %}
+			    	<li><a href="?page={{ groups.next_page_number }}">&raquo;</a></li>
+			    {% else %}
+			    	<li class="disabled"><span>&raquo;</span></li>
+			    {% endif %}
+			</ul>
+		{% endif %}
+
+
+		
+	</div>
+
+</div>
+
+
+
+
+{% endblock %}
+

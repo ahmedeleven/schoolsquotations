@@ -1,0 +1,9 @@
+<div class="model_sub_select_menu">
+{% for school in schools %}
+	<div class="model_sub_select_menu_item">
+		<span class="model_sub_select_id" style="display:none;">{{school.id}}</span>
+		<span class="model_sub_select_model">{{school.name_en}}</span>
+	</div>
+{% endfor %}
+</div>
+
