@@ -1,4 +1,4 @@
-# Project README
+# Project School Quotations
 
 Welcome to the project! This project is made with Django and includes a MySQL database. You can import SQL files to initialize the database with sample data.
 
