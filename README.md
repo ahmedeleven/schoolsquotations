@@ -2,6 +2,8 @@
 
 Welcome to the project! This project is made with Django and includes a MySQL database. You can import SQL files to initialize the database with sample data.
 
+The project was made to manage maintenance quotations for schools
+
 ## Dependencies
 
 To run this project, you need to install the following dependencies:
@@ -11,7 +13,7 @@ To run this project, you need to install the following dependencies:
 - MySQL 5.7 or higher
 - mysqlclient
 
-You can install these dependencies using pip. Run the following command in your terminal:
+You can install other dependencies using pip. Run the following command in your terminal:
 
 ```Bash
 pip install -r requirements.txt
@@ -41,6 +43,8 @@ mysql -u <username> -p <database_name> < <path_to_sql_file_found_in_the_project_
 ```
 
 Replace `<username>` with your MySQL username, `<database_name>` with the name of the database you created
+
+6. Rename the file `.env.example` to `.env` and replace `<your_mysql_password>` with your database password 
 
 ## Running the Project
 
