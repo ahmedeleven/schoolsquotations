@@ -39,10 +39,10 @@ Replace `<username>` with your MySQL username and `<database_name>` with the nam
 5. Import the SQL file by running the following command:
 
 ```Bash
-mysql -u <username> -p <database_name> < <path_to_sql_file_found_in_the_project_root_directory>
+mysql -u <username> -p <database_name> < <path_to_sql_file>
 ```
 
-Replace `<username>` with your MySQL username, `<database_name>` with the name of the database you created
+Replace `<username>` with your MySQL username, `<database_name>` with the name of the database you created, `<path_to_sql_file>` with the path of the SQL file found in the project root directory
 
 6. Rename the file `.env.example` to `.env` and replace `<your_mysql_password>` with your database password 
 
