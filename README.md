@@ -9,7 +9,7 @@ The project was made to manage maintenance quotations for schools
 To run this project, you need to install the following dependencies:
 
 - Python 3.7 or higher
-- Django 3.1 or higher
+- Django 3.2.18 or higher
 - MySQL 5.7 or higher
 - mysqlclient
 
