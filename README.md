@@ -61,8 +61,9 @@ python manage.py runserver
 4. Open a web browser and navigate to the URL shown in the terminal output.
 
 5. To view the project use the following username and password
+   ```Credentials
    Username: admin
    Password: Sh@redP@ss123
+   ```
 
 That's it! You should now be able to view and interact with the project.
-Save the changes to the README.md file and close your text editor.
